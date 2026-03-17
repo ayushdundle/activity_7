@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Rural Education</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f4f7f8;
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: #2c3e50;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 20px;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+                  url('https://images.unsplash.com/photo-1588072432836-e10032774350');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      text-align: center;
+      padding: 80px 20px;
+    }
+
+    .hero h1 {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 18px;
+    }
+
+    /* Section */
+    .section {
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    /* Form */
+    .form-container {
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 350px;
+      margin: auto;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      text-align: left;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      margin-top: 15px;
+      width: 100%;
+      padding: 10px;
+      background-color: green;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: darkgreen;
+    }
+
+    /* Data display */
+    .data-display {
+      max-width: 400px;
+      margin: 20px auto;
+    }
+
+    .record {
+      background: #fff;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">Rural Education</div>
+
+  <!-- Home Section -->
+  <div class="hero">
+    <h1>Empowering Rural Education</h1>
+    <p>Education is the foundation for a better future. Join us in improving education in rural areas.</p>
+  </div>
+
+  <!-- About Section -->
+  <div class="section">
+    <h2>About Our Mission</h2>
+    <p>
+      Our goal is to support students in rural areas by collecting information,
+      understanding their needs, and improving access to education.
+    </p>
+  </div>
+
+  <!-- Form Section -->
+  <div class="section">
+    <h2>Fill Your Details</h2>
+
+    <div class="form-container">
+      <form id="myForm">
+
+        <label>Name</label>
+        <input type="text" id="name" required>
+
+        <label>Village Name</label>
+        <input type="text" id="village" required>
+
+        <label>Pincode</label>
+        <input type="number" id="pincode" required>
+
+        <label>Address</label>
+        <textarea id="address" required></textarea>
+
+        <label>Date</label>
+        <input type="date" id="date" required>
+
+        <label>Contact</label>
+        <input type="tel" id="contact" required>
+
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+
+    <div class="data-display" id="dataDisplay"></div>
+  </div>
+
+  <!-- Script -->
+  <script>
+    const form = document.getElementById("myForm");
+    const display = document.getElementById("dataDisplay");
+
+    let records = JSON.parse(localStorage.getItem("formData")) || [];
+
+    function showData() {
+      display.innerHTML = "";
+      records.forEach((item) => {
+        display.innerHTML += `
+          <div class="record">
+            <b>Name:</b> ${item.name}<br>
+            <b>Village:</b> ${item.village}<br>
+            <b>Pincode:</b> ${item.pincode}<br>
+            <b>Address:</b> ${item.address}<br>
+            <b>Date:</b> ${item.date}<br>
+            <b>Contact:</b> ${item.contact}
+          </div>
+        `;
+      });
+    }
+
+    showData();
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const data = {
+        name: document.getElementById("name").value,
+        village: document.getElementById("village").value,
+        pincode: document.getElementById("pincode").value,
+        address: document.getElementById("address").value,
+        date: document.getElementById("date").value,
+        contact: document.getElementById("contact").value
+      };
+
+      records.push(data);
+      localStorage.setItem("formData", JSON.stringify(records));
+
+      form.reset();
+      showData();
+    });
+  </script>
+
+</body>
+</html>
